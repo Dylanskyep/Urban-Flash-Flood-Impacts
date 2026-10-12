@@ -1,0 +1,6 @@
+city,groundsource_episodes,noaa_events_total,noaa_events_with_coordinates,matched_pairs,high_confidence_matches,medium_confidence_matches,groundsource_unmatched,noaa_with_coords_unmatched,noaa_match_rate_percent
+Gainesville,41,2,2,1,0,1,40,1,50.0
+Jacksonville,182,38,38,18,10,8,164,20,47.4
+Miami,379,122,122,37,15,22,342,85,30.3
+Orlando,158,7,7,2,1,1,156,5,28.6
+Tampa,224,3,3,1,1,0,223,2,33.3

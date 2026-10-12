@@ -1,0 +1,11 @@
+city,match_type,matched_events,noaa_events_with_coordinates,match_rate_percent
+Gainesville,High confidence,0,2,0.0
+Gainesville,High + Medium,1,2,50.0
+Jacksonville,High confidence,10,38,26.3
+Jacksonville,High + Medium,18,38,47.4
+Miami,High confidence,15,122,12.3
+Miami,High + Medium,37,122,30.3
+Orlando,High confidence,1,7,14.3
+Orlando,High + Medium,2,7,28.6
+Tampa,High confidence,1,3,33.3
+Tampa,High + Medium,1,3,33.3

@@ -1,0 +1,6 @@
+duration_bin,event_count,events_with_damage,mean_noaa_total_damage_usd,median_noaa_total_damage_usd,sum_noaa_total_damage_usd,max_noaa_total_damage_usd
+<1 hour,6,6,2500.0,0.0,15000.0,10000.0
+1–3 hours,10,10,10000.0,0.0,100000.0,75000.0
+3–6 hours,6,6,185833.33333333334,7500.0,1115000.0,1000000.0
+6–12 hours,3,3,10000.0,0.0,30000.0,30000.0
+>12 hours,2,2,51000.0,51000.0,102000.0,100000.0
