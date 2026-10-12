@@ -212,15 +212,64 @@ Urban-Flash-Flood-Impacts/
 ├── .gitignore
 ├── scripts/
 │   ├── 01_build_harmonized_events.py
-│   └── 02_match_noaa_groundsource.py
+│   ├── 02_match_noaa_groundsource.py
+│   └── older_scripts/
+│       ├── csv_combination.py
+│       ├── filter_locations.py
+│       ├── graph_creation.py
+│       └── noaa_groundsource_matching_old.py
 ├── data/
 │   ├── README.md
 │   └── processed/
+│       ├── 14_harmonized_overlap_events.csv
+│       ├── 24_matched_event_pairs_enriched.csv
+│       ├── 25_groundsource_with_noaa_impacts.csv
+│       ├── 26_noaa_event_match_status.csv
+│       ├── 27_match_summary_by_county.csv
+│       ├── 28_high_confidence_matched_events.csv
+│       ├── 32_noaa_damage_by_duration_bin.csv
+│       ├── 33_match_confidence_by_county.csv
+│       ├── 34_noaa_damage_by_year_high_confidence.csv
+│       ├── 35_match_rate_by_confidence.csv
+│       ├── 36_damage_status_by_county_high_confidence.csv
+│       └── 37_duration_by_damage_status_high_confidence.csv
 ├── figures/
 │   ├── temporal/
 │   ├── matching/
 │   ├── impacts/
 │   └── sensitivity/
-├── dashboard/
-└── archive/
-    └── older_scripts/
+└── dashboard/
+
+## Reproducing the Analysis
+1. Obtain the NOAA Storm Events CSV files for the five study areas.
+2. Obtain the Groundsource parquet dataset.
+3. Add the Florida county-boundary shapefile used for spatial filtering.
+4. Install the required Python packages.
+5. Run:
+python scripts/01_build_harmonized_events.py
+python scripts/02_match_noaa_groundsource.py
+
+6. Use the processed CSVs in data/processed/ to reproduce the figures or build the dashboard.
+
+### Requirements
+Core Python packages:
+pandas
+numpy
+scipy
+geopandas
+shapely
+pyarrow
+
+A typical installation command is:
+pip install pandas numpy scipy geopandas shapely pyarrow
+
+## Limitations
+- NOAA and Groundsource use different event definitions and reporting systems.
+- Some NOAA events lack usable coordinates and therefore cannot participate in strict spatial matching.
+- Multiple Groundsource records may represent one broader flood episode.
+- Event matching is based on spatial and temporal heuristics rather than confirmed event identity.
+- High-confidence sample sizes are small in some study areas.
+- Gainesville currently has no High-confidence matches and therefore does not appear in some High-confidence impact figures.
+- NOAA-reported damage is strongly influenced by a small number of large-loss events.
+- Missing damage values are not equivalent to zero reported damage.
+- Duration, frequency, and damage relationships are descriptive associations and should not be interpreted as causal.
