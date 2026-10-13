@@ -1,0 +1,5 @@
+city,matched_events,damaging_events,total_noaa_damage_usd,mean_noaa_damage_per_event_usd,median_noaa_damage_per_event_usd,max_noaa_damage_usd,percent_events_with_damage
+Jacksonville,10,3,17000.0,1700.0,0.0,10000.0,30.0
+Miami,15,9,1345000.0,89666.66666666667,10000.0,1000000.0,60.0
+Orlando,1,0,0.0,0.0,0.0,0.0,0.0
+Tampa,1,0,0.0,0.0,0.0,0.0,0.0
