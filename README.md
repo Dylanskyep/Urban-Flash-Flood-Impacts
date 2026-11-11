@@ -1,35 +1,27 @@
-# Urban-Flash-Flood-Impacts
+# Urban Flash-Flood Impacts
 
-Researching the impacts of flash floods across five urban Florida study areas: Miami, Tampa, Orlando, Gainesville, and Jacksonville.
+## F.L.O.O.D.
+### Florida Flood Location, Observation, Outcomes, and Dynamics
+
+This project examines urban flash-flood observations, reported impacts, spatial correspondence, and event profiles across five Florida study areas: Miami, Tampa, Orlando, Gainesville, and Jacksonville.
 
 ## Overview
 
-This project compares NOAA Storm Events records with Groundsource flood observations to study flash-flood frequency, duration, spatial correspondence, and NOAA-reported financial impacts.
+The project compares NOAA Storm Events records with Groundsource flood observations to study:
 
-NOAA is treated as the primary source for official flash-flood characteristics and impacts, while Groundsource serves as an independent observational source used to corroborate likely corresponding flood episodes.
+- flood-event frequency and timing;
+- flood duration;
+- spatial correspondence between independent flood datasets;
+- NOAA-reported financial impacts;
+- damaging versus non-damaging events;
+- geographic differences in reported impacts; and
+- recurring NOAA flash-flood event profiles identified using K-means clustering.
 
-The main relationships examined are:
+NOAA is treated as the primary source for official flash-flood characteristics and reported impacts. Groundsource serves as an independent observational source used to identify and corroborate likely corresponding flood episodes.
 
-- flood duration vs. reported financial damage;
-- flood duration vs. probability of reported damage;
-- annual flood frequency vs. annual reported damage;
-- annual flood frequency vs. maximum event damage;
-- damaging vs. non-damaging events;
-- geographic differences in financial impact;
-- NOAA-Groundsource match coverage; and
-- sensitivity to stricter versus broader matching criteria.
+Matched NOAA-Groundsource pairs represent likely corresponding events based on spatial and temporal proximity. They should not be interpreted as confirmed event identities.
 
-## Study Areas
-
-| Study Area | County |
-|---|---|
-| Miami | Miami-Dade County |
-| Tampa | Hillsborough County |
-| Orlando | Orange County |
-| Gainesville | Alachua County |
-| Jacksonville | Duval County |
-
-Groundsource observations are spatially filtered using official county polygons. City names are used as study-area labels, while the corresponding county is the geographic filtering unit.
+---
 
 ## Research Questions
 
@@ -41,44 +33,14 @@ Groundsource observations are spatially filtered using official county polygons.
 6. Do years with more matched floods also have greater total or maximum event damage?
 7. How do financial impacts differ across the five study areas?
 8. Do the main impact relationships remain similar when Medium-confidence matches are included?
+9. Can NOAA flash-flood events be grouped into distinct profiles based on seasonal timing, duration, and NOAA-reported financial damage?
+10. Do similar-duration flood profiles differ substantially in their reported impacts?
 
-## Data Sources
-
-### NOAA Storm Events
-
-NOAA Storm Events is the primary source for official flash-flood events and impacts.
-
-The analysis retains records where:
-
-- `EVENT_TYPE = Flash Flood`
-- `CZ_TYPE = C`
-
-NOAA fields used include:
-
-- event begin and end time;
-- coordinates;
-- property damage;
-- crop damage;
-- total financial damage;
-- deaths; and
-- injuries.
-
-NOAA impacts remain NOAA-reported attributes throughout the analysis.
-
-### Groundsource
-
-Groundsource provides flood observations containing:
-
-- start and end dates;
-- geometry;
-- flooded area; and
-- event identifiers.
-
-Nearby Groundsource records are grouped into candidate flood episodes before matching to NOAA.
+---
 
 ## Processing Workflow
 
-The final analysis uses three main Python scripts.
+The final analysis uses four primary Python scripts.
 
 ### 1. Build and Harmonize Event Records
 
@@ -88,11 +50,11 @@ This script:
 
 - loads NOAA and Groundsource data;
 - filters NOAA to Flash Flood events;
-- filters Groundsource using county polygons;
-- calculates event duration;
+- filters Groundsource using official county polygons;
+- calculates NOAA flood duration;
 - preserves NOAA impact fields;
-- groups Groundsource records into candidate episodes;
-- restricts data to overlapping study years; and
+- groups nearby Groundsource observations into candidate flood episodes;
+- restricts records to overlapping study years; and
 - creates harmonized analysis files.
 
 Main matching input:
@@ -109,9 +71,9 @@ A candidate match must:
 - be within 10 km; and
 - have overlapping intervals or a temporal gap of no more than 24 hours.
 
-Global one-to-one optimization is used so that a record cannot be assigned to multiple counterparts.
+Global one-to-one optimization is used so that one record cannot be assigned to multiple counterparts.
 
-The match score is a heuristic ranking score, not a probability.
+The match score is a heuristic ranking measure and is not a probability.
 
 ### 3. Create Additional Relationship Tables
 
@@ -126,126 +88,155 @@ This script creates graph-ready datasets for:
 - county-level damage per matched event; and
 - annual flood frequency vs. event severity.
 
-## Match Confidence
+### 4. Create NOAA Flash-Flood Event Profiles
 
-### High Confidence
+`/scripts/kmeans_event_profiles.py`
 
-A match is High confidence when:
+This script performs exploratory K-means clustering using NOAA flash-flood events from the common 2005–2025 analysis period.
 
-- distance ≤ 5 km; and
-- intervals overlap or temporal gap ≤ 12 hours.
+The clustering variables represent three conceptual event characteristics:
 
-### Medium Confidence
+- seasonal timing;
+- flood duration; and
+- NOAA-reported financial damage.
 
-A match is Medium confidence when it satisfies the broader accepted limits:
+Flood duration and financial damage are transformed using `log(1 + x)` to reduce the influence of extreme values.
 
-- distance ≤ 10 km; and
-- temporal gap ≤ 24 hours;
+Seasonal timing is represented using sine and cosine transformations of day of year so that dates near the end and beginning of the calendar year remain close in feature space.
 
-but does not meet the stricter High-confidence definition.
+The four numerical clustering features are therefore:
 
-High-confidence matches are used for the primary impact analysis. High + Medium matches are used for sensitivity analysis.
+- `log(1 + duration_hours)`;
+- `log(1 + noaa_total_damage_usd)`;
+- sine of day of year; and
+- cosine of day of year.
 
-## Main Analytical Relationships
+All clustering features are standardized before K-means is fitted.
 
-### NOAA vs. Groundsource Event Frequency
+Candidate solutions from `k = 2` through `k = 10` are evaluated using:
 
-Annual and monthly counts are compared to examine differences in recorded flood activity and dataset coverage.
+- within-cluster sum of squares (inertia); and
+- silhouette score.
 
-### NOAA-Groundsource Corroboration
+The five-cluster solution is retained as the primary exploratory interpretation based on a balance of cluster separation, cluster size, and substantive interpretability. The four-cluster solution is retained as a sensitivity comparison.
 
-The analysis compares:
+Cluster descriptions are assigned only after K-means assigns the events. These descriptions summarize the original NOAA event characteristics and are not predefined categories used to determine cluster membership.
 
-- High-confidence match percentage; and
-- High + Medium match percentage.
+---
 
-This shows the tradeoff between stricter match certainty and broader coverage.
+## K-Means Event Profiles
 
-### Flood Duration vs. Financial Damage
+The primary five-cluster solution identifies distinct NOAA flash-flood profiles based on combinations of seasonal timing, flood duration, and reported financial impact.
 
-High-confidence matched NOAA events are used to compare duration with NOAA-reported financial damage through:
+| Cluster | Post-hoc description | Median duration | Events with reported damage |
+|---|---|---:|---:|
+| Cluster 1 | May–Jun, ~3-hour, non-damaging | 2.95 hr | 0% |
+| Cluster 2 | Sep–Nov, ~4-hour, mostly non-damaging | 4.25 hr | 5.7% |
+| Cluster 3 | Aug–Oct, very-short-duration, mixed-impact | ~5 min | 33.3% |
+| Cluster 4 | May–Jun, ~2.5-hour, high-impact | 2.53 hr | 100% |
+| Cluster 5 | Oct–Dec, ~4.5-hour, high-impact | 4.50 hr | 100% |
 
-- event-level duration-damage plots;
-- median damage by duration category;
-- damaging vs. non-damaging event comparisons;
-- duration distributions by damage status;
-- percentage of events with reported damage by duration category; and
-- duration vs. damage among damaging events only.
+The clustering suggests that NOAA-reported flood impacts are associated with multiple combinations of timing and duration rather than one simple duration-to-damage relationship.
 
-### Annual Flood Frequency vs. Financial Impact
+In particular:
 
-Annual matched-event counts are compared with:
+- high-impact profiles occur at both shorter and longer durations;
+- similar-duration clusters can have very different reported-damage frequencies;
+- longer duration alone does not consistently correspond to greater reported financial loss; and
+- seasonal timing alone does not determine impact severity.
 
-- total annual NOAA-reported damage; and
-- maximum individual event damage per year.
+These clusters are exploratory descriptive profiles and should not be interpreted as causal categories.
 
-These comparisons test whether years with more matched floods also experience greater total or extreme financial losses.
+---
 
-### Geographic Impact Differences
+## Interactive Dashboard
 
-Study areas are compared using:
+The project includes an interactive Streamlit dashboard:
 
-- total reported damage;
-- mean damage per matched event;
-- median property damage;
-- proportion of events with reported damage; and
-- damaging vs. non-damaging event counts.
+`dashboard/app.py`
 
-## Current Findings
+Run it with:
 
-The current analysis shows that:
+```bash
+streamlit run dashboard/app.py
+```
 
-- NOAA and Groundsource record substantially different numbers of flood observations.
-- High + Medium criteria produce greater match coverage than High confidence alone.
-- High-confidence matches provide a smaller, more conservative impact-analysis sample.
-- Match coverage varies across study areas.
-- Flood duration may be related to whether damage is reported, but duration does not consistently predict the magnitude of financial loss.
-- The 3–6 hour and >12 hour duration categories show higher proportions of damaging events, although the longest-duration category contains very few events.
-- Even among damaging events only, longer duration does not consistently correspond to larger financial losses.
-- Miami has the highest proportion of damaging High-confidence events and substantially greater average and total reported damage than the other study areas.
-- Annual flood frequency does not consistently correspond to greater total or maximum event damage.
-- A small number of high-loss floods dominate annual and overall financial damage.
-- No direct or indirect deaths or injuries were reported among the current High-confidence matched NOAA events.
+The dashboard contains two main sections.
 
-These findings describe associations and should not be interpreted as causal relationships.
+### Source Overview
 
-## Figures
+Users can filter NOAA and Groundsource records by study area and year.
 
-Figures are organized by analytical purpose.
+The dashboard displays:
 
-### `figures/temporal/`
+- source-level event and episode counts;
+- NOAA-reported financial damage;
+- spatial flood-observation maps;
+- separate NOAA and Groundsource flood-activity time-series panels; and
+- recorded observations by study area.
 
-- Annual Matched Flash-Flood Frequency vs NOAA-Reported Financial Damage
-- Annual NOAA-Reported Financial Damage for High-Confidence Matched Flood Events
-- Number of High-Confidence Matched NOAA Flood Events by Year
-- Annual Matched Flood Frequency vs. Maximum NOAA-Reported Event Damage
+NOAA and Groundsource annual activity are displayed separately because the two datasets contain substantially different numbers of observations.
 
-### `figures/matching/`
+### K-Means Clusters
 
-- High vs Medium Matches by County
-- Percentage of NOAA Flash-Flood Events Corroborated by Groundsource by Match Confidence
+Users can filter NOAA events by:
 
-### `figures/impacts/flood duration and damage/`
+- cluster;
+- study area; and
+- year.
 
-- Flood Duration vs. NOAA-Reported Damage Among Only Damaging High-Confidence Events
-- Median NOAA-Reported Damage by Flood Duration Category
-- NOAA Flood Duration for High-Confidence Events With and Without Reported Financial Damage
-- NOAA Flood Duration vs. Reported Financial Damage for High-Confidence Matched Events
-- Number of High-Confidence Matched NOAA Events by Flood Duration Category
-- Percentage of High-Confidence Matched Flood Events With Reported Damage by Duration
+Interactive features include:
 
-### `figures/impacts/geographic impacts/`
+- elbow and silhouette model-selection graphs;
+- event counts by cluster;
+- log-transformed flood duration vs. log-transformed reported damage;
+- duration and damage distributions;
+- monthly cluster patterns;
+- annual cluster composition using stacked bars;
+- damage-frequency and damage-severity summaries;
+- an interactive three-dimensional cluster visualization;
+- spatial cluster maps; and
+- event-level tables.
 
-- High-Confidence Matched Flood Events With and Without NOAA-Reported Financial Damage
-- Mean NOAA-Reported Damage per High-Confidence Matched Event by Study Area
-- Median NOAA-Reported Property Damage by County for High-Confidence Matched Events
-- NOAA-Reported Flood Damage by County for High-Confidence Matches
-- Percentage of High-Confidence Matched Events With Reported Damage by Study Area
+Cluster colors and Cluster 1–5 labels are standardized across the clustering figures and dashboard.
 
-### `figures/sensitivity/`
+---
 
-- NOAA Flood Duration vs Reported Damage for High- and Medium-Confidence Matched Events
-- NOAA Flood Duration vs. Reported Damage for High- and Medium-Confidence Matches
+## Clustering Figures
+
+### `figures/clustering/poster/`
+
+Poster-focused K-means figures are condensed into multi-panel layouts to reduce visual repetition and conserve space.
+
+Primary outputs include:
+
+- **Model Selection** — elbow and silhouette analysis for candidate cluster solutions from `k = 2` through `k = 10`;
+- **Cluster Description Guide** — lookup table describing Clusters 1–5;
+- **Cluster Characteristics** — event counts, duration vs. damage, duration distribution, and damage distribution;
+- **Temporal Patterns** — monthly cluster activity and annual stacked cluster composition;
+- **Cluster Distributions** — log-transformed duration and damage distributions; and
+- **3D Cluster Structure** — visualization of duration, damage, and seasonal timing.
+
+Standalone percentage-damaging and median-damage figures are retained for supporting analysis but can be summarized as text on the research poster to reduce graphical redundancy.
+
+---
+
+## Current Clustering Findings
+
+The clustering analysis adds several findings to the earlier matched-event analysis:
+
+- Cluster 1 contains no events with positive NOAA-reported financial damage.
+- Approximately 5.7% of Cluster 2 events report financial damage.
+- Approximately 33.3% of Cluster 3 events report financial damage.
+- Clusters 4 and 5 consist entirely of events with reported financial damage.
+- Cluster 4 has a median duration of approximately 2.53 hours despite being a high-impact profile.
+- Cluster 5 has a longer median duration of approximately 4.50 hours and is also a high-impact profile.
+- Clusters 2 and 5 have relatively similar typical durations but substantially different impact patterns.
+- These patterns reinforce the earlier finding that flood duration alone does not consistently explain reported financial impact.
+
+The results describe associations and event profiles rather than causal relationships.
+
+---
 
 ## Repository Structure
 
@@ -258,68 +249,89 @@ Urban-Flash-Flood-Impacts/
 │   ├── 01_build_harmonized_events.py
 │   ├── 02_match_noaa_groundsource.py
 │   ├── additional_relationships.py
+│   ├── kmeans_event_profiles.py
 │   └── older_scripts/
 ├── data/
 │   ├── README.md
 │   └── processed/
-│       ├── 14_harmonized_overlap_events.csv
-│       ├── 24_matched_event_pairs_enriched.csv
-│       ├── 25_groundsource_with_noaa_impacts.csv
-│       ├── 26_noaa_event_match_status.csv
-│       ├── 27_match_summary_by_county.csv
-│       ├── 28_high_confidence_matched_events.csv
-│       ├── 32_noaa_damage_by_duration_bin.csv
-│       ├── 33_match_confidence_by_county.csv
-│       ├── 34_noaa_damage_by_year_high_confidence.csv
-│       ├── 35_match_rate_by_confidence.csv
-│       ├── 36_damage_status_by_county_high_confidence.csv
-│       ├── 37_duration_by_damage_status_high_confidence.csv
-│       ├── 38_damage_probability_by_duration_bin.csv
-│       ├── 39_high_confidence_area_vs_damage.csv
-│       ├── 40_high_confidence_damaging_events_duration_vs_damage.csv
-│       ├── 41_match_distance_vs_temporal_gap.csv
-│       ├── 42_damage_per_event_by_county_high_confidence.csv
-│       └── 43_annual_frequency_damage_severity.csv
 ├── figures/
 │   ├── temporal/
 │   ├── matching/
 │   ├── impacts/
-│   │   ├── flood duration and damage/
-│   │   └── geographic impacts/
-│   └── sensitivity/
+│   ├── sensitivity/
+│   └── clustering/
+│       ├── model_selection/
+│       ├── k5/
+│       └── poster/
 └── dashboard/
+    └── app.py
 ```
 
+---
+
 ## Reproducing the Analysis
-1. Obtain the NOAA Storm Events CSV files for the five study areas.
-2. Obtain the Groundsource parquet dataset.
-3. Add the Florida county-boundary shapefile used for spatial filtering.
+
+1. Obtain the NOAA Storm Events data used for the five Florida study areas.
+2. Obtain the Groundsource flood-observation dataset.
+3. Add the Florida county-boundary data used for spatial filtering.
 4. Install the required Python packages.
-5. Run:
+5. Run the analysis scripts in order:
+
+```bash
 python scripts/01_build_harmonized_events.py
 python scripts/02_match_noaa_groundsource.py
+python scripts/additional_relationships.py
+python scripts/kmeans_event_profiles.py
+```
 
-6. Use the processed CSVs in data/processed/ to reproduce the figures or build the dashboard.
+6. Launch the interactive dashboard with:
 
-### Requirements
-Core Python packages:
+```bash
+streamlit run dashboard/app.py
+```
+
+### Core Python Requirements
+
+```text
 pandas
 numpy
 scipy
+scikit-learn
+matplotlib
+plotly
+streamlit
+folium
+streamlit-folium
 geopandas
 shapely
 pyarrow
+```
 
-A typical installation command is:
-pip install pandas numpy scipy geopandas shapely pyarrow
+---
+
+## Generative AI Assistance
+
+Generative AI tools were used during project development as assistants for Python coding, data-cleaning workflows, debugging, code organization, visualization development, and documentation.
+
+AI-generated suggestions were not treated as analytical results. All code included in the final workflow was reviewed, executed, tested, and verified by the project authors against the underlying NOAA and Groundsource data.
+
+Data-cleaning decisions, event-matching criteria, clustering variables, figures, statistical interpretations, and final conclusions were reviewed and confirmed by the project authors.
+
+Generative AI was not used as a source of flood-event observations, financial-impact records, or other empirical research data.
+
+---
 
 ## Limitations
+
 - NOAA and Groundsource use different event definitions and reporting systems.
 - Some NOAA events lack usable coordinates and therefore cannot participate in strict spatial matching.
 - Multiple Groundsource records may represent one broader flood episode.
 - Event matching is based on spatial and temporal heuristics rather than confirmed event identity.
 - High-confidence sample sizes are small in some study areas.
 - Gainesville currently has no High-confidence matches and therefore does not appear in some High-confidence impact figures.
-- NOAA-reported damage is strongly influenced by a small number of large-loss events.
+- NOAA-reported damage is strongly influenced by a small number of high-loss events.
 - Missing damage values are not equivalent to zero reported damage.
-- Duration, frequency, and damage relationships are descriptive associations and should not be interpreted as causal.
+- Groundsource flooded-area geometry may represent broad observational footprints rather than exact physical inundation boundaries.
+- K-means clustering is exploratory and depends on the selected features, transformations, scaling, and number of clusters.
+- Cluster names are post-hoc descriptions and are not predefined classifications.
+- Duration, frequency, damage, geographic differences, and clustering patterns are descriptive associations and should not be interpreted as causal.
