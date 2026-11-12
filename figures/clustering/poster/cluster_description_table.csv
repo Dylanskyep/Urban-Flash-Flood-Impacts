@@ -1,0 +1,6 @@
+Cluster,Description,N,Median Duration (hr),% Damaging,Median Damage ($),Median Damage if Damaging ($)
+1,"May-Jun, ~3-Hour, Non-Damaging",49,2.95,0.0,0.0,
+2,"Sep-Nov, ~4-Hour, Mostly Non-Damaging",35,4.25,5.714285714285714,0.0,1000.0
+3,"Aug-Oct, Very-Short (~5-Min), Mixed-Impact",36,0.085,33.333333333333336,0.0,6000.0
+4,"May-Jun, ~2.5-Hour, High-Impact",29,2.53,100.0,20000.0,20000.0
+5,"Oct-Dec, ~4.5-Hour, High-Impact",23,4.5,100.0,15000.0,15000.0

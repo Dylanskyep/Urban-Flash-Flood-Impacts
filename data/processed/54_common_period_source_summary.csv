@@ -1,0 +1,3 @@
+source,start_year,end_year,year_span,total_events,average_events_per_year,cities_present,average_events_per_city
+NOAA Storm Events,2005,2025,21,172,8.19,5,34.4
+Groundsource,2005,2025,21,983,46.81,5,196.6

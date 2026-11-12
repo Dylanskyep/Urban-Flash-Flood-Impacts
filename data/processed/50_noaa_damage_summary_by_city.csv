@@ -1,0 +1,6 @@
+city,event_count,events_with_damage_values,damaging_events,total_damage_usd,mean_damage_per_event_usd,median_damage_per_event_usd,max_damage_usd,percent_events_with_reported_damage
+Gainesville,2,2,0,0.0,0.0,0.0,0.0,0.0
+Jacksonville,38,38,11,1051000.0,27657.894736842107,0.0,800000.0,28.9
+Miami,122,122,52,50201000.0,411483.60655737703,0.0,28000000.0,42.6
+Orlando,7,7,1,10000.0,1428.5714285714287,0.0,10000.0,14.3
+Tampa,3,3,2,150000.0,50000.0,50000.0,100000.0,66.7

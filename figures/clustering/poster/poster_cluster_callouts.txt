@@ -1,0 +1,41 @@
+
+K-MEANS POSTER CALLOUTS
+
+3D CLUSTER DESCRIPTION
+K-means grouped NOAA flash-flood events using three conceptual
+dimensions: seasonal timing, flood duration, and reported financial
+damage. Duration and damage were log-transformed, while seasonal timing
+was represented using cyclical sine and cosine transformations of day
+of year.
+
+DAMAGE OCCURRENCE
+Damage occurrence differed strongly across clusters. Cluster 1 had
+0.0% damaging events, Cluster 2 had 5.7%, Cluster 3
+had 33.3%, Cluster 4 had 100.0%, and Cluster 5 had
+100.0%.
+
+DAMAGE SEVERITY
+When zero-damage events were included, median reported damage was $0
+for Clusters 1-3, compared with approximately
+$20,000 for Cluster 4 and
+$15,000 for Cluster 5.
+
+Among damaging events only, median reported damage was approximately
+$1,000 in Cluster 2,
+$6,000 in Cluster 3,
+$20,000 in Cluster 4, and
+$15,000 in Cluster 5.
+
+INTERPRETATION
+High reported impact was not limited to the longest-duration floods.
+The five-cluster solution includes both shorter-duration and
+longer-duration high-impact profiles. Similar-duration clusters also
+show different damage occurrence, suggesting that duration alone does
+not explain NOAA-reported financial impact.
+
+MODEL SELECTION NOTE
+The expanded model-selection analysis evaluates k=2 through k=10.
+The five-cluster solution should be described as the primary
+interpretation based on a balance of separation, cluster size, and
+interpretability. Do not claim k=5 has the maximum silhouette score
+unless the new k=2 through k=10 results show that.

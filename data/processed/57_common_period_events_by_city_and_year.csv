@@ -1,0 +1,114 @@
+source,city,year,event_count
+Groundsource,Gainesville,2014,1
+Groundsource,Gainesville,2015,3
+Groundsource,Gainesville,2016,1
+Groundsource,Gainesville,2017,12
+Groundsource,Gainesville,2018,4
+Groundsource,Gainesville,2019,4
+Groundsource,Gainesville,2020,1
+Groundsource,Gainesville,2021,6
+Groundsource,Gainesville,2022,7
+Groundsource,Gainesville,2023,2
+Groundsource,Jacksonville,2008,1
+Groundsource,Jacksonville,2009,1
+Groundsource,Jacksonville,2011,2
+Groundsource,Jacksonville,2012,6
+Groundsource,Jacksonville,2013,5
+Groundsource,Jacksonville,2014,4
+Groundsource,Jacksonville,2015,7
+Groundsource,Jacksonville,2016,11
+Groundsource,Jacksonville,2017,23
+Groundsource,Jacksonville,2018,15
+Groundsource,Jacksonville,2019,16
+Groundsource,Jacksonville,2020,11
+Groundsource,Jacksonville,2021,15
+Groundsource,Jacksonville,2022,19
+Groundsource,Jacksonville,2023,9
+Groundsource,Jacksonville,2024,27
+Groundsource,Jacksonville,2025,10
+Groundsource,Miami,2005,9
+Groundsource,Miami,2008,2
+Groundsource,Miami,2009,2
+Groundsource,Miami,2011,3
+Groundsource,Miami,2012,7
+Groundsource,Miami,2013,8
+Groundsource,Miami,2014,7
+Groundsource,Miami,2015,11
+Groundsource,Miami,2016,17
+Groundsource,Miami,2017,32
+Groundsource,Miami,2018,10
+Groundsource,Miami,2019,23
+Groundsource,Miami,2020,32
+Groundsource,Miami,2021,36
+Groundsource,Miami,2022,30
+Groundsource,Miami,2023,32
+Groundsource,Miami,2024,74
+Groundsource,Miami,2025,44
+Groundsource,Orlando,2011,1
+Groundsource,Orlando,2014,3
+Groundsource,Orlando,2015,3
+Groundsource,Orlando,2016,4
+Groundsource,Orlando,2017,10
+Groundsource,Orlando,2018,15
+Groundsource,Orlando,2019,26
+Groundsource,Orlando,2020,6
+Groundsource,Orlando,2021,5
+Groundsource,Orlando,2022,33
+Groundsource,Orlando,2023,13
+Groundsource,Orlando,2024,39
+Groundsource,Tampa,2011,1
+Groundsource,Tampa,2012,2
+Groundsource,Tampa,2013,2
+Groundsource,Tampa,2014,2
+Groundsource,Tampa,2015,15
+Groundsource,Tampa,2016,9
+Groundsource,Tampa,2017,24
+Groundsource,Tampa,2018,16
+Groundsource,Tampa,2019,23
+Groundsource,Tampa,2020,8
+Groundsource,Tampa,2021,6
+Groundsource,Tampa,2022,17
+Groundsource,Tampa,2023,8
+Groundsource,Tampa,2024,65
+Groundsource,Tampa,2025,25
+NOAA Storm Events,Gainesville,2017,1
+NOAA Storm Events,Gainesville,2023,1
+NOAA Storm Events,Jacksonville,2008,2
+NOAA Storm Events,Jacksonville,2009,1
+NOAA Storm Events,Jacksonville,2010,1
+NOAA Storm Events,Jacksonville,2012,8
+NOAA Storm Events,Jacksonville,2013,2
+NOAA Storm Events,Jacksonville,2015,2
+NOAA Storm Events,Jacksonville,2017,7
+NOAA Storm Events,Jacksonville,2019,1
+NOAA Storm Events,Jacksonville,2020,5
+NOAA Storm Events,Jacksonville,2021,1
+NOAA Storm Events,Jacksonville,2024,5
+NOAA Storm Events,Jacksonville,2025,3
+NOAA Storm Events,Miami,2005,3
+NOAA Storm Events,Miami,2006,1
+NOAA Storm Events,Miami,2007,4
+NOAA Storm Events,Miami,2008,6
+NOAA Storm Events,Miami,2009,5
+NOAA Storm Events,Miami,2010,4
+NOAA Storm Events,Miami,2011,5
+NOAA Storm Events,Miami,2012,5
+NOAA Storm Events,Miami,2013,9
+NOAA Storm Events,Miami,2014,2
+NOAA Storm Events,Miami,2015,3
+NOAA Storm Events,Miami,2016,1
+NOAA Storm Events,Miami,2017,2
+NOAA Storm Events,Miami,2019,8
+NOAA Storm Events,Miami,2020,19
+NOAA Storm Events,Miami,2021,7
+NOAA Storm Events,Miami,2022,14
+NOAA Storm Events,Miami,2023,10
+NOAA Storm Events,Miami,2024,6
+NOAA Storm Events,Miami,2025,8
+NOAA Storm Events,Orlando,2016,1
+NOAA Storm Events,Orlando,2021,1
+NOAA Storm Events,Orlando,2022,3
+NOAA Storm Events,Orlando,2024,2
+NOAA Storm Events,Tampa,2006,1
+NOAA Storm Events,Tampa,2014,1
+NOAA Storm Events,Tampa,2025,1

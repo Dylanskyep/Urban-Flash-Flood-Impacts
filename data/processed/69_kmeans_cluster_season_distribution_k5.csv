@@ -1,0 +1,15 @@
+cluster,season,event_count
+1,Spring,19
+1,Summer,29
+1,Winter,1
+2,Fall,30
+2,Summer,1
+2,Winter,4
+3,Fall,19
+3,Summer,17
+4,Spring,11
+4,Summer,17
+4,Winter,1
+5,Fall,10
+5,Summer,2
+5,Winter,11

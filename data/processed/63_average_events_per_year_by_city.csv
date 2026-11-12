@@ -1,0 +1,11 @@
+source,city,total_events,average_events_per_year
+Groundsource,Gainesville,41,1.95
+Groundsource,Jacksonville,182,8.67
+Groundsource,Miami,379,18.05
+Groundsource,Orlando,158,7.52
+Groundsource,Tampa,223,10.62
+NOAA Storm Events,Gainesville,2,0.1
+NOAA Storm Events,Jacksonville,38,1.81
+NOAA Storm Events,Miami,122,5.81
+NOAA Storm Events,Orlando,7,0.33
+NOAA Storm Events,Tampa,3,0.14

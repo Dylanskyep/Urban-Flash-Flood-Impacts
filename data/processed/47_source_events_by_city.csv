@@ -1,0 +1,11 @@
+source,city,event_count
+Groundsource,Gainesville,41
+Groundsource,Jacksonville,182
+Groundsource,Miami,379
+Groundsource,Orlando,158
+Groundsource,Tampa,224
+NOAA Storm Events,Gainesville,2
+NOAA Storm Events,Jacksonville,38
+NOAA Storm Events,Miami,122
+NOAA Storm Events,Orlando,7
+NOAA Storm Events,Tampa,3

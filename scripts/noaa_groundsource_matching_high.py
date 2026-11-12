@@ -507,7 +507,7 @@ def main():
     )
     damage_status_by_county.to_csv(
         OUTPUT_DIR / "36_damage_status_by_county_high_confidence.csv",
-        index=False
+        index=Falsepython
     )
     duration_by_damage_status.to_csv(
         OUTPUT_DIR / "37_duration_by_damage_status_high_confidence.csv",

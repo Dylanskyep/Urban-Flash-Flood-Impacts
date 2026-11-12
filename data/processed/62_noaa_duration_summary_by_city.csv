@@ -1,0 +1,6 @@
+city,event_count,mean_duration_hours,median_duration_hours,min_duration_hours,max_duration_hours
+Gainesville,2,2.635,2.635,0.77,4.5
+Jacksonville,38,2.0073684210526315,1.0,0.0,17.57
+Miami,122,5.398934426229508,3.085,0.0,75.5
+Orlando,7,6.464285714285714,7.0,1.0,13.0
+Tampa,3,1.8333333333333333,2.5,0.0,3.0
